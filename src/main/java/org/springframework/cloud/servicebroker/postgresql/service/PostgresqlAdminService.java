@@ -71,7 +71,7 @@ public class PostgresqlAdminService {
 		try {
 		    jdbcTemplate.execute("CREATE USER \""+username+"\" WITH PASSWORD '"+password+"'");
 		    jdbcTemplate.execute("GRANT ALL  ON DATABASE \""+database+"\" TO \""+username+"\"");
-		    jdbcTemplate.execute("FLUSH PRIVILEGES");
+//		    jdbcTemplate.execute("FLUSH PRIVILEGES");
 		} catch (DataAccessException e) {
 			throw handleException(e);
 		}
