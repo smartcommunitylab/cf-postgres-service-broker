@@ -23,6 +23,9 @@ public class ServiceInstanceBinding {
 	private String syslogDrainUrl;
 	private String appGuid;
 
+	public ServiceInstanceBinding() {
+	}
+
 	public ServiceInstanceBinding(String id,
 								  String serviceInstanceId,
 								  Map<String,Object> credentials,

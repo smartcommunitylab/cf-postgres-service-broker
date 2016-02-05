@@ -45,8 +45,7 @@ public class ServiceInstance {
 	@JsonProperty("dashboard_url")
 	private String dashboardUrl;
 
-	@SuppressWarnings("unused")
-	private ServiceInstance() {}
+	public ServiceInstance() {}
 
 	public ServiceInstance(String serviceInstanceId, String serviceDefinitionId, String planId,
 						   String organizationGuid, String spaceGuid, String dashboardUrl) {
