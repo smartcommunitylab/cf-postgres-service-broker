@@ -30,14 +30,14 @@ public class PostgresqlConfig {
         try {
             Connection conn = DriverManager.getConnection(this.jdbcUrl);
 
-            String serviceTable = "CREATE TABLE IF NOT EXISTS service (serviceinstanceid varchar(200) not null default '',"
-                    + " servicedefinitionid varchar(200) not null default '',"
-                    + " planid varchar(200) not null default '',"
-                    + " organizationguid varchar(200) not null default '',"
-                    + " spaceguid varchar(200) not null default '')";
-
-            Statement createServiceTable = conn.createStatement();
-            createServiceTable.execute(serviceTable);
+//            String serviceTable = "CREATE TABLE IF NOT EXISTS service (id varchar(200) not null default '',"
+//                    + " servicedefinitionid varchar(200) not null default '',"
+//                    + " planid varchar(200) not null default '',"
+//                    + " organizationguid varchar(200) not null default '',"
+//                    + " spaceguid varchar(200) not null default '')";
+//
+//            Statement createServiceTable = conn.createStatement();
+//            createServiceTable.execute(serviceTable);
             return conn;
         } catch (SQLException e) {
             logger.error("Error while creating initial 'service' table", e);

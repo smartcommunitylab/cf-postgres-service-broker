@@ -38,7 +38,7 @@ public class PostgresqlAdminService {
 	
 	public boolean databaseExists(String databaseName) throws PostgresqlServiceException {
 	    try {
-			List<String> databases = jdbcTemplate.queryForList("SHOW DATABASES LIKE '"+databaseName+"'", String.class);
+			List<String> databases = jdbcTemplate.queryForList("select datname from pg_database where datname LIKE  '"+databaseName+"'", String.class);
 			return databases != null && databases.size() > 0;
 		} catch (DataAccessException e) {
 			throw handleException(e);
@@ -47,7 +47,7 @@ public class PostgresqlAdminService {
 	
 	public void deleteDatabase(String databaseName) throws PostgresqlServiceException {
 		try{
-		    jdbcTemplate.execute("DROP DATABASE IF EXISTS '"+databaseName+"'");
+		    jdbcTemplate.execute("DROP DATABASE IF EXISTS \""+databaseName+"\"");
 		} catch (DataAccessException e) {
 			throw handleException(e);
 		}
@@ -55,7 +55,7 @@ public class PostgresqlAdminService {
 	
 	public void createDatabase(String databaseName) throws PostgresqlServiceException {
 		try {
-		    jdbcTemplate.execute("CREATE DATABASE '"+databaseName+"'  ENCODING 'UTF8'");
+		    jdbcTemplate.execute("CREATE DATABASE \""+databaseName+"\"  ENCODING 'UTF8'");
 		    jdbcTemplate.execute("REVOKE all on database \"" + databaseName + "\" from public");
 
 		} catch (DataAccessException e) {
@@ -69,8 +69,8 @@ public class PostgresqlAdminService {
 	
 	public void createUser(String database, String username, String password) throws PostgresqlServiceException {
 		try {
-		    jdbcTemplate.execute("CREATE USER '"+username+"' IDENTIFIED BY '"+password+"'");
-		    jdbcTemplate.execute("GRANT ALL PRIVILEGES ON `"+database+"`.* TO '"+username+"'@'%'");
+		    jdbcTemplate.execute("CREATE USER \""+username+"\" WITH PASSWORD '"+password+"'");
+		    jdbcTemplate.execute("GRANT ALL  ON DATABASE \""+database+"\" TO \""+username+"\"");
 		    jdbcTemplate.execute("FLUSH PRIVILEGES");
 		} catch (DataAccessException e) {
 			throw handleException(e);
@@ -79,7 +79,7 @@ public class PostgresqlAdminService {
 	
 	public void deleteUser(String database, String username) throws PostgresqlServiceException {
 		try {
-			jdbcTemplate.execute("DROP USER '"+username+"'");
+			jdbcTemplate.execute("DROP USER \""+username+"\"");
 		} catch (DataAccessException e) {
 			throw handleException(e);
 		}
